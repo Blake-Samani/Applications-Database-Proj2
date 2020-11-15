@@ -1,0 +1,10 @@
+DROP TABLE UserSession cascade constraints;
+DROP TABLE StudentAdmin cascade constraints;
+DROP TABLE UserAdmin cascade constraints;
+DROP TABLE StudentUser cascade constraints;
+DROP TABLE Person cascade constraints;
+DROP TABLE StudentId cascade constraints;
+DROP TABLE Section cascade constraints;
+DROP TABLE Course cascade constraints;
+DROP TABLE Enrolls cascade constraints;
+DROP SEQUENCE studentId_seq;
