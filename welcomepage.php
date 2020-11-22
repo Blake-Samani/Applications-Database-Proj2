@@ -9,7 +9,7 @@ if($connection == false){
   die($e['message']);
 }
 
-$studentSQL = "select userid from studentuser where userid = $userid";
+$studentSQL = "select userid,studentId from studentuser where userid = $userid";
 $adminSQL = "select userid from useradmin where userid = $userid";
 $studentadminSQL = "select userid from studentadmin where userid = $userid";
 
@@ -26,6 +26,7 @@ $adminValues = oci_fetch_array ($adminC);
 $studentadminValues = oci_fetch_array ($studentadminC);
 
 $studentUID = $studentValues[0];
+$studentId = $studentValues[1];
 $adminUID = $adminValues[0];
 $studentadminUID = $studentadminValues[0];
 
@@ -35,7 +36,7 @@ if ($sessionid == "") {
 } 
 else {
   // here we can generate the content of the welcome page
-  if($studentadminUID == $userid){
+  if($adminUID == $userid && $studentUID == $userid){
     echo"<h1>Student Admin User Page</h1>";
     //logout button
     echo"<form method='post' action='logout.php?sessionid=$sessionid'>
@@ -46,14 +47,14 @@ else {
     echo"<form method='post' action='password_input.php?sessionid=$sessionid&userid=$userid'>
     <button type='submit' class='addButton'>Change Your Password</button>
     </form>";
-    echo("<a href='student.php?sessionid=$sessionid&userid=$userid'>Student Page</a> <br/>");
+    echo("<a href='student.php?sessionid=$sessionid&userid=$userid&studentId=$studentId'>Student Page</a> <br/>");
     echo("<a href='admin.php?sessionid=$sessionid&userid=$userid'>Admin Page</a>");
   }
   else if($adminUID == $userid){
     Header("Location:admin.php?sessionid=$sessionid&userid=$userid");
   }
   else  if($studentUID == $userid){
-    Header("Location:student.php?sessionid=$sessionid&userid=$userid");
+    Header("Location:student.php?sessionid=$sessionid&userid=$userid&studentId=$studentId");
   }
   else{
     echo("Invalid user! User is not a student or admin");

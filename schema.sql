@@ -81,6 +81,10 @@ CREATE TABLE Enrolls(
 );
 COMMIT;
 
-
-
+CREATE VIEW v_SectionFullInfo (CourseNo, CourseTitle, Credits, Semester, SectionId, Capacity, Schedule, Info) AS 
+SELECT c.CourseNo, c.CourseTitle, c.Credits, c.Semester, s.SectionId, s.Capacity, s.Schedule, s.Info
+FROM Course c 
+JOIN Section s ON s.CourseNo = c.CourseNo
+ORDER BY c.CourseNo;
+COMMIT;
 

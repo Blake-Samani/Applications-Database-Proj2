@@ -26,3 +26,22 @@ values(
     20000000, 000000001
 );
 commit;
+
+
+INSERT INTO Course(CourseNo, CourseTitle, Credits, Semester)
+VALUES(
+    1,'Database',3,'Fall 2020'
+);
+commit;
+
+INSERT INTO Section(SectionId, Capacity, Schedule, Info, CourseNo)
+VALUES(
+    1, 25, 'TR 4:15pm-5:30pm', 'Learn how to database', 1
+);
+commit;
+
+INSERT INTO Enrolls(SectionId, StudentId)
+VALUES(
+    1, 'JD100000'
+);
+commit;
