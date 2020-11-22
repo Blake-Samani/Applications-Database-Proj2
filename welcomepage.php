@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="style.css">
+
 <?
 // include the verification PHP script
 include "verifysession.php";

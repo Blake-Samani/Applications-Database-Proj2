@@ -26,5 +26,3 @@ values(
     20000000, 000000001
 );
 commit;
-
---Austin
