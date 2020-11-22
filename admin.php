@@ -9,7 +9,7 @@ if($connection == false){
   die($e['message']);
 }
 // display the results
-$query = "select p.userid,p.username,p.pdw,s.studentid,a.adminid,p.firstname,p.lastname,p.ssn,p.birthdate,p.addy,p.sex " .
+$query = "select p.userid,p.username,p.pdw,s.studentid,a.adminid,p.firstname,p.lastname,p.ssn,p.birthdate,p.addy,p.sex,p.adminFlag,p.studentFlag " .
 	  "from person p ". 
 	  "left join studentuser s on p.userid = s.userid ". 
 	  "left join useradmin a on p.userid = a.userid";
@@ -76,6 +76,8 @@ while ($values = oci_fetch_array ($cursor)){
   $bday = $values[8];
   $addy = $values[9];
   $sex = $values[10];
+  $isAdmin = $values[11];
+  $isStudent = $values[12];
 
   echo "<tr>
   <td>$userid</td>
@@ -104,7 +106,7 @@ while ($values = oci_fetch_array ($cursor)){
     </form>
   </td>
   <td>
-    <form method='post' action='admin_delete.php?sessionid=$sessionid&userid=$userid&adminid=$adminid&studentid=$studentid'>
+    <form method='post' action='admin_delete.php?sessionid=$sessionid&userid=$userid&isAdmin=$isAdmin&isStudent=$isStudent'>
      <button type='submit'>Delete</button>
     </form>
   </td>

@@ -10,8 +10,8 @@ $ssn = $_POST["ssn"];
 $addy = $_POST["addy"];
 $bday = $_POST["bday"];
 $sex = $_POST["sex"];
-$studentid = $_POST["studentid"];
-$adminid = $_POST["adminid"];
+$isStudent = $_POST["isStudent"];
+$isAdmin = $_POST["isAdmin"];
 
 
 // display the insertion form.
@@ -27,9 +27,9 @@ Sex (M/F): <input type='text' value = '$sex' maxlength='1' name='sex'> <br />
 Username (Required): <input type='text' value = '$username' maxlength='50' name='username'>  <br />
 Password (Required): <input type='text' value = '$pdw'  maxlength='100' name='pdw'>  <br />
 
-AdminId (Up to 7 digits): <input type='text' value = '$adminid' maxlength='7' name='adminid'>  <br />
-StudentId (Up to 7 digits): <input type='text' value = '$studentid' maxlength='7' name='studentid'>  <br />
-(If both are filled out you will be a StudentAdmin) <br />
+Student?: <input type='checkbox' name='isStudent'>  <br />
+Admin?: <input type='checkbox' name='isAdmin'>  <br />
+(If both are selected out you will be a StudentAdmin) <br />
 
 <input type='submit' value='Submit'>
 <input type='reset' value='Reset to Original Value'>

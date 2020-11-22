@@ -9,8 +9,8 @@ $ssn = $_POST["ssn"];
 $addy = $_POST["addy"];
 $bday = $_POST["bday"];
 $sex = $_POST["sex"];
-$studentid = $_POST["studentid"];
-$adminid = $_POST["adminid"];
+$isStudent = $_POST["isStudent"];
+$isAdmin = $_POST["isAdmin"];
 
 $connection = oci_connect ("gq001", "whzycj", "gqiannew2:1521/pdborcl");
 if ($connection == false){
@@ -46,7 +46,7 @@ if ($result == false){
   display_oracle_error_message($cursor);
 }
 
-if($studentid != ""){
+if($isStudent){
   $studentSQL = "INSERT INTO StudentUser(StudentID, userID)
   SELECT CONCAT(CONCAT(SUBSTR(p.firstname, 1, 1),SUBSTR(p.lastname, 1, 1)),CAST(studentId_seq.NEXTVAL AS VARCHAR(6))), p.userID
   FROM Person p
@@ -55,13 +55,13 @@ if($studentid != ""){
   oci_execute ($sCursor);
 }
 
-if($admin != ""){
-  $adminSQL = "INSERT INTO useradmin (adminid, userid) VALUES ($admin,$userid)";
+if($isAdmin){
+  $adminSQL = "INSERT INTO useradmin (adminid, userid) VALUES (MAX(adminid)+1,$userid)";
   $aCursor = oci_parse ($connection, $adminSQL);
   oci_execute ($aCursor);
 }
 
-if($admin != "" && $studentid != ""){
+if($isAdmin && $isStudent){
   $saSQL = "INSERT INTO studentadmin (studentadminid, userid, studentid, adminid) " . 
   "VALUES ($admin . $studentid,$userid, $studentid, $adminid)";
   $saCursor = oci_parse ($connection, $saSQL);
