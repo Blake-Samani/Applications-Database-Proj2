@@ -58,6 +58,7 @@ else {
   }
   else{
     echo("Invalid user! User is not a student or admin");
+    
   }
 }
 ?>
