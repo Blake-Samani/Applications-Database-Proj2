@@ -44,17 +44,17 @@ if ($result == false){
 
 $studentValues = oci_fetch_array ($StudentCursor);
 
+ $sId = $studentValues[0];
+ $fName = $studentValues[1];
+ $lName = $studentValues[2];
+ $age = $studentValues[3];
+ $addy = $studentValues[4];
+ $type = $studentValues[5];
+ $standing = $studentValues[6];
+ $gpa = $studentValues[7];
 
- echo"<h1>Student Page</h1>";
-
- echo "$studentValues[0]";
- echo "$studentValues[1]";
- echo "$studentValues[2]";
- echo "$studentValues[3]";
- echo "$studentValues[4]";
- echo "$studentValues[5]";
- echo "$studentValues[6]";
- echo "$studentValues[7]";
+ echo "<h1>$fName $lName</h1>";
+ echo "<p>$sId</p>";
 
 //table to show what sections are in enrolled in
 echo "<table class='displayTable'>";
