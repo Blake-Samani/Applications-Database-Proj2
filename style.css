@@ -1,0 +1,29 @@
+.displayTable {
+	border: 1px solid black;
+	border-radius: 3px;
+	background-color: #ffffff;
+	width: 80%;
+	border-collapse: collapse;
+}
+
+.displayTable td,
+.displayTable th {
+	border: 1px solid #ddd;
+	padding: 8px;
+}
+
+.displayTable tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+.displayTable tr:hover {
+	background-color: #ddd;
+}
+
+.displayTable th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: #333456;
+	color: white;
+}

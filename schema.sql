@@ -58,8 +58,7 @@ COMMIT;
 CREATE TABLE Course(
 	CourseNo int PRIMARY KEY NOT NULL,
 	CourseTitle varchar(50),
-	Credits int,
-	Semester varchar(50)
+	Credits int
 );
 COMMIT;
 
@@ -69,6 +68,7 @@ CREATE TABLE Section(
 	Schedule varchar(50),
 	Info varchar(500),
 	CourseNo int,
+	Semester varchar(50),
 	CONSTRAINT FK_SectionCourse FOREIGN KEY (CourseNo) REFERENCES Course(CourseNo)
 );
 COMMIT;
@@ -82,9 +82,8 @@ CREATE TABLE Enrolls(
 COMMIT;
 
 CREATE VIEW v_SectionFullInfo (CourseNo, CourseTitle, Credits, Semester, SectionId, Capacity, Schedule, Info) AS 
-SELECT c.CourseNo, c.CourseTitle, c.Credits, c.Semester, s.SectionId, s.Capacity, s.Schedule, s.Info
+SELECT c.CourseNo, c.CourseTitle, c.Credits, s.Semester, s.SectionId, s.Capacity, s.Schedule, s.Info
 FROM Course c 
-JOIN Section s ON s.CourseNo = c.CourseNo
-ORDER BY c.CourseNo;
+JOIN Section s ON s.CourseNo = c.CourseNo;
 COMMIT;
 

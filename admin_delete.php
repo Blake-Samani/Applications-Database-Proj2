@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="style.css">
 <?
 $sessionid = $_GET["sessionid"];
 $userid = $_GET["userid"];

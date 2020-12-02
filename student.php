@@ -1,8 +1,8 @@
-
+<link rel="stylesheet" href="style.css">
 <?
 $sessionid =$_GET["sessionid"];
 $userid =$_GET["userid"];
-$studentId = $_GET["studentId"]
+$studentId = $_GET["studentId"];
 
 $connection = oci_connect ("gq001", "whzycj", "gqiannew2:1521/pdborcl");
 if ($connection == false){
@@ -10,10 +10,8 @@ if ($connection == false){
    die($e['message']);
 }
 
-$sql = "SELECT s.CourseNo, s.SectionId, s.CourseTitle, s.Credits, s.Semester, s.Capacity, s.Schedule, s.Info FROM v_SectionFullInfo s JOIN Enrolls e ON e.SectionId = s.SectionId WHERE e.StudentId = $studentId";
-echo '<script>';
-echo 'console.log($sql)';
-echo '</script>';
+$sql = "SELECT s.CourseNo, s.SectionId, s.CourseTitle, s.Credits, s.Semester, s.Capacity, s.Schedule, s.Info FROM v_SectionFullInfo s JOIN Enrolls e ON e.SectionId = s.SectionId WHERE e.StudentId = '$studentId'";
+$studentInfoSql = "SELECT su.StudentId, p.FirstName, p.LastName, 21, p.addy, su.StudentType, su.standing, su.gpa FROM Person p JOIN StudentUser su ON su.UserId = p.userid WHERE su.StudentId = '$studentId'";
 
 $cursor = oci_parse ($connection, $sql);
 if ($cursor == false){
@@ -30,7 +28,33 @@ if ($result == false){
    die($e['message']);
 }
 
-echo"<h1>Student Page</h1>";
+$StudentCursor = oci_parse ($connection, $studentInfoSql);
+if ($cursor == false){
+   // For oci_parse errors, pass the connection handle
+   $e = oci_error($connection);  
+   die($e['message']);
+}
+
+$StudentResult = oci_execute ($StudentCursor);
+if ($result == false){
+   // For oci_execute errors pass the cursor handle
+   $e = oci_error($StudentCursor);  
+   die($e['message']);
+}
+
+$studentValues = oci_fetch_array ($StudentCursor);
+
+
+ echo"<h1>Student Page</h1>";
+
+ echo "$studentValues[0]";
+ echo "$studentValues[1]";
+ echo "$studentValues[2]";
+ echo "$studentValues[3]";
+ echo "$studentValues[4]";
+ echo "$studentValues[5]";
+ echo "$studentValues[6]";
+ echo "$studentValues[7]";
 
 //table to show what sections are in enrolled in
 echo "<table class='displayTable'>";
@@ -67,10 +91,10 @@ while ($values = oci_fetch_array ($cursor)){
 }
 echo ("</table>");
 
-// //Add Section button
-// echo"<form method='post' action='addSection.php?sessionid=$sessionid&userid=$userid'>
-//   <button type='submit' class='addButton'>Add Section</button>
-//   </form>";
+//Add Section button
+echo"<form method='post' action='addSection.php?sessionid=$sessionid&userid=$userid'>
+  <button type='submit' class='addButton'>Add Section</button>
+  </form>";
 
 //logout button
 echo"<form method='post' action='logout.php?sessionid=$sessionid'>

@@ -1,16 +1,9 @@
 <link rel="stylesheet" href="style.css">
 <?
 $sessionid =$_GET["sessionid"];
-$userid = $_GET["userid"];
-$username = $_POST["username"];
-$pdw = $_POST["pdw"];
-$fname = $_POST["fname"];
-$lname = $_POST["lname"];
-$ssn = $_POST["ssn"];
-$addy = $_POST["addy"];
-$bday = $_POST["bday"];
-$sex = $_POST["sex"];
-
+$userid =$_GET["userid"];
+$sectionId = $_POST["sectionId"];
+$studentId = $_POST["studentId"];
 
 $connection = oci_connect ("gq001", "whzycj", "gqiannew2:1521/pdborcl");
 if ($connection == false){
@@ -19,12 +12,7 @@ if ($connection == false){
    die($e['message']);
 }
 
-// the sql string
-$sql = "UPDATE Person SET username = '$username', pdw = '$pdw', firstname = '$fname', lastname = '$lname',
-		ssn = $ssn, addy = '$addy', birthdate = TO_DATE('$bday','yyyy/mm/dd'),sex = '$sex'
-		WHERE userid = $userid";
-//echo($sql);
-
+$sql = "INSERT INTO Enrolls (SectionId,StudentId) VALUES ($sectionId, '$studentId')";
 $cursor = oci_parse ($connection, $sql);
 if ($cursor == false){
    // For oci_parse errors, pass the connection handle
@@ -49,6 +37,5 @@ oci_commit ($connection);
 // close the connection with oracle
 oci_close ($connection);
 
-Header("Location:admin.php?sessionid=$sessionid");
-
+Header("Location:addSection.php?sessionid=$sessionid&userid=$userid");
 ?>

@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="style.css">
 <?
 $sessionid =$_GET["sessionid"];
 $userid =$_GET["userid"];
@@ -30,6 +30,7 @@ if ($result == false){
 }
 
 echo"<h1>Admin User Page</h1>";
+
 //logout button
 echo"<div class='wrapper'>";
 echo"<form method='post' action='logout.php?sessionid=$sessionid'>
@@ -113,6 +114,7 @@ while ($values = oci_fetch_array ($cursor)){
   </tr>";
 }
 echo ("</table>");
+
 
 ?>
 

@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="style.css">
 <?
 $userName = $_POST["userName"];
 $pdw = $_POST["pdw"];
