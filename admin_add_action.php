@@ -56,7 +56,7 @@ if($isStudent){
 }
 
 if($isAdmin){
-  $adminSQL = "INSERT INTO useradmin (adminid, userid) VALUES (MAX(adminid)+1,$userid)";
+  $adminSQL = "INSERT INTO UserAdmin (AdminID, userID) VALUES ((SELECT MAX(AdminID) FROM UserAdmin)+1,$userid)";
   $aCursor = oci_parse ($connection, $adminSQL);
   oci_execute ($aCursor);
 }
