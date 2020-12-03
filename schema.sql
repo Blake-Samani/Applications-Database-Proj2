@@ -88,6 +88,15 @@ CREATE TABLE Deadline
 );
 COMMIT;
 
+Create Table Grade
+(
+    Grade double(1,1),
+    StudentId varchar(8),
+    SectionId int,
+    CONSTRAINT FK_StudentSectionGrade FOREIGN KEY (SectionId) REFERENCES Section(SectionId),
+    CONSTRAINT FK_StudentSectionStudent FOREIGN KEY (StudentId) REFERENCES StudentUser(StudentId)
+);
+COMMIT
 
 CREATE VIEW v_SectionFullInfo (CourseNo, CourseTitle, Credits, Semester, SectionId, Capacity, Schedule, Info) AS 
 SELECT c.CourseNo, c.CourseTitle, c.Credits, s.Semester, s.SectionId, s.Capacity, s.Schedule, s.Info
