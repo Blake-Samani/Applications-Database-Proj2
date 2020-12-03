@@ -81,6 +81,14 @@ CREATE TABLE Enrolls(
 );
 COMMIT;
 
+CREATE TABLE Deadline
+(
+	Semester varchar(50),
+	Deadline date
+);
+COMMIT;
+
+
 CREATE VIEW v_SectionFullInfo (CourseNo, CourseTitle, Credits, Semester, SectionId, Capacity, Schedule, Info) AS 
 SELECT c.CourseNo, c.CourseTitle, c.Credits, s.Semester, s.SectionId, s.Capacity, s.Schedule, s.Info
 FROM Course c 
