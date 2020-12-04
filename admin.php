@@ -63,6 +63,7 @@ echo "<tr>
         <th>adminid</th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>";
 // fetch the result from the cursor one by one
 while ($values = oci_fetch_array ($cursor)){
@@ -111,6 +112,11 @@ while ($values = oci_fetch_array ($cursor)){
      <button type='submit'>Delete</button>
     </form>
   </td>
+  <td>
+  <form method='post' action='admin_editGrades.php?sessionid=$sessionid&userid=$userid&studentid=$studentid'>
+  <button type='submit'>Grades</button>
+  </form>
+</td>
   </tr>";
 }
 echo ("</table>");

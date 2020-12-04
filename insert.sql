@@ -86,8 +86,8 @@ commit;
 
 
 INSERT INTO StudentUser
-	(StudentID, userID)
-SELECT CONCAT(CONCAT(SUBSTR(p.firstname, 1, 1),SUBSTR(p.lastname, 1, 1)),CAST(studentId_seq.NEXTVAL AS VARCHAR(6))), p.userID
+	(StudentId, UserId, Standing, StudentType, CreditsRec, GPA, CoursesCompleted)
+SELECT CONCAT(CONCAT(SUBSTR(p.firstname, 1, 1),SUBSTR(p.lastname, 1, 1)),CAST(studentId_seq.NEXTVAL AS VARCHAR(6))), p.userID, 'Good','UnderGraduate',21, 2.5, 7
 FROM Person p
 WHERE p.userID <= 000000005;
 commit;
@@ -102,9 +102,9 @@ commit;
 
 
 INSERT INTO Course
-	(CourseNo, CourseTitle, Credits)
+	(CourseNo, CourseTitle, Credits, PreReq)
 VALUES(
-		1, 'Database', 3
+		1, 'Database', 3, NULL
 );
 commit;
 
@@ -129,9 +129,9 @@ commit;
 
 
 INSERT INTO Course
-	(CourseNo, CourseTitle, Credits)
+	(CourseNo, CourseTitle, Credits,PreReq)
 VALUES(
-		2, 'Programming 1', 3
+		2, 'Programming 1', 3, 1
 );
 commit;
 INSERT INTO Section
@@ -157,9 +157,9 @@ commit;
 
 
 INSERT INTO Course
-	(CourseNo, CourseTitle, Credits)
+	(CourseNo, CourseTitle, Credits,PreReq)
 VALUES(
-		3, 'Software Engineering I', 3
+		3, 'Software Engineering I', 3, NULL
 );
 commit;
 INSERT INTO Section
@@ -183,9 +183,9 @@ commit;
 
 
 INSERT INTO Course
-	(CourseNo, CourseTitle, Credits)
+	(CourseNo, CourseTitle, Credits, PreReq)
 VALUES(
-		4, 'Object Orient Programming', 3  
+		4, 'Object Orient Programming', 3, NULL
 );
 commit;
 
@@ -210,9 +210,9 @@ commit;
 
 
 INSERT INTO Course
-	(CourseNo, CourseTitle, Credits)
+	(CourseNo, CourseTitle, Credits, PreReq)
 VALUES(
-		5, 'Computer Organization', 3
+		5, 'Computer Organization', 3, NULL
 );
 commit;
 
@@ -262,3 +262,26 @@ VALUES(
 );
 commit;
 
+INSERT INTO Deadline
+	(Semester, Deadline)
+VALUES(
+	'Fall 2020', TO_DATE('2020-08-31', 'YYYY-MM-DD')
+);
+COMMIT;
+
+INSERT INTO Deadline
+	(Semester, Deadline)
+VALUES(
+	'Spring 2020', TO_DATE('2021-01-31', 'YYYY-MM-DD')
+);
+COMMIT;
+
+INSERT INTO Grade (Grade,StudentId,SectionId)
+VALUES (0.0,'JD100000',7);
+COMMIT;
+INSERT INTO Grade (Grade,StudentId,SectionId)
+VALUES (0.0,'JD100000',5);
+COMMIT;
+INSERT INTO Grade (Grade,StudentId,SectionId)
+VALUES (0.0,'JH100004',17);
+COMMIT;

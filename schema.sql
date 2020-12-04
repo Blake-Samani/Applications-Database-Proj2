@@ -58,7 +58,8 @@ COMMIT;
 CREATE TABLE Course(
 	CourseNo int PRIMARY KEY NOT NULL,
 	CourseTitle varchar(50),
-	Credits int
+	Credits int,
+	PreReq int
 );
 COMMIT;
 
@@ -81,9 +82,62 @@ CREATE TABLE Enrolls(
 );
 COMMIT;
 
+CREATE TABLE Deadline( 
+	Semester varchar(50),
+	Deadline date
+);
+COMMIT;
+
+Create Table Grade
+(
+    Grade number,
+    StudentId varchar(8),
+    SectionId int,
+    CONSTRAINT FK_StudentSectionGrade FOREIGN KEY (SectionId) REFERENCES Section(SectionId),
+    CONSTRAINT FK_StudentSectionStudentGrade FOREIGN KEY (StudentId) REFERENCES StudentUser(StudentId)
+);
+COMMIT;
+
 CREATE VIEW v_SectionFullInfo (CourseNo, CourseTitle, Credits, Semester, SectionId, Capacity, Schedule, Info) AS 
 SELECT c.CourseNo, c.CourseTitle, c.Credits, s.Semester, s.SectionId, s.Capacity, s.Schedule, s.Info
 FROM Course c 
 JOIN Section s ON s.CourseNo = c.CourseNo;
 COMMIT;
 
+CREATE OR REPLACE PROCEDURE usp_GetEnrolledSections (student_Id IN varchar)
+AS
+	c1 SYS_REFCURSOR; 
+BEGIN
+	OPEN c1 FOR
+		SELECT s.CourseNo, s.SectionId, s.CourseTitle, s.Credits, s.Semester, s.Capacity, s.Schedule, s.Info 
+		FROM v_SectionFullInfo s 
+		JOIN Enrolls e ON e.SectionId = s.SectionId 
+		WHERE e.StudentId = student_Id;
+	DBMS_SQL.RETURN_RESULT(c1);
+END;
+/
+COMMIT;
+
+--SHOW ERRORS PROCEDURE usp_GetEnrolledSections;
+--DROP PROCEDURE usp_GetEnrolledSections;
+--BEGIN usp_GetEnrolledSections('JD100000'); END;
+
+CREATE OR REPLACE TRIGGER probe_check
+BEFORE UPDATE ON StudentUser
+FOR EACH ROW
+DECLARE 
+gpa_check varchar(7);
+BEGIN
+SELECT gpa INTO gpa_check FROM StudentUser;
+IF gpa_check > 2.0 THEN
+UPDATE StudentUser SET standing = 'good';
+END IF;
+IF gpa_check < 2.0 THEN
+UPDATE StudentUser SET standing = 'bad';
+END IF;
+END;
+/
+COMMIT;
+
+--SHOW ERRORS TRIGGER probe_check;
+--DROP TRIGGER probe_check;

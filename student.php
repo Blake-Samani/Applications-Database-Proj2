@@ -10,8 +10,11 @@ if ($connection == false){
    die($e['message']);
 }
 
-$sql = "SELECT s.CourseNo, s.SectionId, s.CourseTitle, s.Credits, s.Semester, s.Capacity, s.Schedule, s.Info FROM v_SectionFullInfo s JOIN Enrolls e ON e.SectionId = s.SectionId WHERE e.StudentId = '$studentId'";
-$studentInfoSql = "SELECT su.StudentId, p.FirstName, p.LastName, 21, p.addy, su.StudentType, su.standing, su.gpa FROM Person p JOIN StudentUser su ON su.UserId = p.userid WHERE su.StudentId = '$studentId'";
+$sql = "SELECT s.CourseNo, s.SectionId, s.CourseTitle, s.Credits, s.Semester, s.Capacity, s.Schedule, s.Info 
+FROM v_SectionFullInfo s 
+JOIN Enrolls e ON e.SectionId = s.SectionId 
+WHERE e.StudentId = '$studentId'";
+$studentInfoSql = "SELECT su.StudentId, p.FirstName, p.LastName, p.BirthDate, p.addy, su.StudentType, su.Standing, su.GPA, su.CreditsRec, su.CoursesCompleted FROM Person p JOIN StudentUser su ON su.UserId = p.userid WHERE su.StudentId = '$studentId'";
 
 $cursor = oci_parse ($connection, $sql);
 if ($cursor == false){
@@ -47,14 +50,19 @@ $studentValues = oci_fetch_array ($StudentCursor);
  $sId = $studentValues[0];
  $fName = $studentValues[1];
  $lName = $studentValues[2];
- $age = $studentValues[3];
+ $birthday = $studentValues[3];
  $addy = $studentValues[4];
  $type = $studentValues[5];
  $standing = $studentValues[6];
  $gpa = $studentValues[7];
+ $credits = $studentValues[8];
+ $completed = $studentValues[9];
+
+
 
  echo "<h1>$fName $lName</h1>";
- echo "<p>$sId</p>";
+ echo "<p>Id: $sId &nbsp; Birthday: $birthday &nbsp; Address: $addy &nbsp; Type: $type &nbsp; <b>Status: $standing</b> &nbsp; GPA: $gpa</p>";
+ echo "<p>Courses completed: $completed &nbsp; Total Credit Hours Earned: $credits </p>";
 
 //table to show what sections are in enrolled in
 echo "<table class='displayTable'>";

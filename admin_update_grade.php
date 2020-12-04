@@ -2,15 +2,9 @@
 <?
 $sessionid =$_GET["sessionid"];
 $userid = $_GET["userid"];
-$username = $_POST["username"];
-$pdw = $_POST["pdw"];
-$fname = $_POST["fname"];
-$lname = $_POST["lname"];
-$ssn = $_POST["ssn"];
-$addy = $_POST["addy"];
-$bday = $_POST["bday"];
-$sex = $_POST["sex"];
-
+$studentid = $_GET["studentid"];
+$sectionId = $_GET["sectionId"];
+$grade = $_GET["grade"];
 
 $connection = oci_connect ("gq001", "whzycj", "gqiannew2:1521/pdborcl");
 if ($connection == false){
@@ -18,14 +12,9 @@ if ($connection == false){
    $e = oci_error(); 
    die($e['message']);
 }
-
+echo "<script>console.log('$studentid')</script>";
 // the sql string
-$sql = "SET TRANSACTION isolation level serializable;
-UPDATE Person SET username = '$username', pdw = '$pdw', firstname = '$fname', lastname = '$lname',
-		ssn = $ssn, addy = '$addy', birthdate = TO_DATE('$bday','yyyy/mm/dd'),sex = '$sex'
-		WHERE userid = $userid";
-//echo($sql);
-
+$sql = "UPDATE Grade SET Grade = $grade WHERE StudentId = '$studentid' AND SectionId = $sectionId ";
 $cursor = oci_parse ($connection, $sql);
 if ($cursor == false){
    // For oci_parse errors, pass the connection handle
@@ -50,6 +39,5 @@ oci_commit ($connection);
 // close the connection with oracle
 oci_close ($connection);
 
-Header("Location:admin.php?sessionid=$sessionid");
-
+Header("Location:admin_editGrades.php?sessionid=$sessionid&userid=$userid&studentid=$studentid");
 ?>

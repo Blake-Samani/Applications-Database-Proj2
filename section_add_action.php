@@ -12,6 +12,12 @@ if ($connection == false){
    die($e['message']);
 }
 
+// $preReq = "";
+// $seats = "";
+// $passed = "";
+// $deadline = "";
+
+
 $sql = "INSERT INTO Enrolls (SectionId,StudentId) VALUES ($sectionId, '$studentId')";
 $cursor = oci_parse ($connection, $sql);
 if ($cursor == false){

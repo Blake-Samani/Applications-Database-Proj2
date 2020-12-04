@@ -14,12 +14,19 @@ if ($connection == false){
 $studentSql = "SELECT s.StudentId FROM StudentUser s WHERE s.UserId = $userid";
 $sql = "SELECT v.CourseNo, v.CourseTitle, v.Credits, v.Semester, v.SectionId, v.Capacity, v.Schedule, v.Info 
         FROM v_SectionFullInfo v 
+        JOIN Deadline d ON d.SectionId = v.SectionId AND d.Deadline <= SYSDATE
         WHERE v.SectionId NOT IN (
             SELECT e.SectionId
             FROM Enrolls e
             JOIN StudentUser s ON s.StudentId = e.StudentId
             WHERE s.UserId = $userid
-        )";
+        )
+        AND v.CourseNo  NOT IN (
+           SELECT c.CourseNo
+           FROM Course c
+           WHERE c.PreReq IS NULL
+        )
+        AND v.Capacity > 0";
 
 
 $cursor = oci_parse ($connection, $sql);
@@ -57,7 +64,7 @@ $valuesS = oci_fetch_array ($cursorS);
 $studentId = $valuesS[0];
 
 echo "<h1>Enroll in Section</h1>";
-echo "<script>console.log('$studentId')</script>";
+
 //table to show what sections are in enrolled in
 echo "<table class='displayTable'>";
 echo "<tr>
