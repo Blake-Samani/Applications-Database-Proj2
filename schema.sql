@@ -116,7 +116,7 @@ BEGIN
 	DBMS_SQL.RETURN_RESULT(c1);
 END;
 /
-COMMIT;
+COMMIT; 
 
 --SHOW ERRORS PROCEDURE usp_GetEnrolledSections;
 --DROP PROCEDURE usp_GetEnrolledSections;
